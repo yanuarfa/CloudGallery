@@ -63,7 +63,8 @@ const Login = () => {
         const results = await getData.json();
         setMyData(results);
         setIsLoading(false);
-        // console.log(results.data.token);
+        AsyncStorage.setItem('token', results.data.token);
+        console.log(results.data.token);
         navigation.navigate('Homepage');
       }
     } catch (e) {

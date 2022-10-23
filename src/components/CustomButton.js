@@ -29,6 +29,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#EDEDF3',
     elevation: 0,
   },
+  container_RED: {
+    backgroundColor: '#FF0000',
+  },
   title: {
     fontSize: 16,
     fontWeight: 'bold',
