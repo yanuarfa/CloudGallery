@@ -7,8 +7,46 @@ import {
   Image,
 } from 'react-native';
 import React from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import CustomButton from '../components/CustomButton';
+
+const getAllData = async () => {
+  try {
+    // setIsLoading(true);
+    const getData = await fetch(
+      'https://playgroundapi.com/bootcamp/api/web/posting/list-posting?page=0',
+      {
+        method: 'GET',
+        headers: {
+          Authorization: 'Bearer ' + (await AsyncStorage.getItem('token')),
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      },
+    );
+    if (getData.status === 500) {
+      // setIsLoading(false);
+      alert('Username or password wrong!');
+      return null;
+    }
+    if (getData.status === 200) {
+      const DATA = await getData.json();
+      // setMyData(results);
+      // setIsLoading(false);
+      // AsyncStorage.setItem('token', results.data.token);
+      // console.log(await AsyncStorage.getItem('@token'));
+      // navigation.navigate('Homepage');
+      // console.log(results);
+      return DATA;
+    }
+  } catch (e) {
+    console.error(e);
+    // setIsLoading(false);
+  }
+
+  return null;
+};
 
 const DATA = [
   {
@@ -45,8 +83,8 @@ const DATA = [
   },
 ];
 
-const onUploadPress = () => {
-  console.warn('Upload Pressed');
+const onUploadPress = async () => {
+  getAllData();
 };
 
 const Item = ({title}) => (

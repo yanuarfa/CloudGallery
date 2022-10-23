@@ -64,7 +64,7 @@ const Login = () => {
         setMyData(results);
         setIsLoading(false);
         AsyncStorage.setItem('token', results.data.token);
-        console.log(results.data.token);
+        // console.log(await AsyncStorage.getItem('@token'));
         navigation.navigate('Homepage');
       }
     } catch (e) {
@@ -75,9 +75,9 @@ const Login = () => {
     return null;
   };
 
-  useEffect(() => {
-    console.log(myData);
-  }, [myData]);
+  // useEffect(() => {
+  //   console.log(myData);
+  // }, [myData]);
 
   return (
     <View style={styles.container}>
