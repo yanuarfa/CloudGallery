@@ -6,12 +6,15 @@ import {
   FlatList,
   Image,
 } from 'react-native';
-import React from 'react';
+import React, {useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import CustomButton from '../components/CustomButton';
+import ImageItem from '../components/ImageItem';
 
 const getAllData = async () => {
+  const [data, setData] = useState({});
+
   try {
     // setIsLoading(true);
     const getData = await fetch(
@@ -48,6 +51,10 @@ const getAllData = async () => {
   return null;
 };
 
+getAllData();
+
+// console.log(DATA);
+
 const DATA = [
   {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
@@ -83,8 +90,8 @@ const DATA = [
   },
 ];
 
-const onUploadPress = async () => {
-  getAllData();
+const onUploadPress = () => {
+  console.warn('clicked');
 };
 
 const Item = ({title}) => (
