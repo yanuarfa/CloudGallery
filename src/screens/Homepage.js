@@ -6,14 +6,16 @@ import {
   FlatList,
   Image,
 } from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import {useNavigation} from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import CustomButton from '../components/CustomButton';
 import ImageItem from '../components/ImageItem';
 
 const getAllData = async () => {
-  const [data, setData] = useState({});
+  let token = await AsyncStorage.getItem('token');
+  console.log(token);
 
   try {
     // setIsLoading(true);
@@ -51,48 +53,48 @@ const getAllData = async () => {
   return null;
 };
 
-getAllData();
-
-// console.log(DATA);
-
 const DATA = [
   {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
     title: 'First Item',
+    source: 'https://playgroundapi.com/bootcamp/api/web/posting/image/124',
   },
   {
     id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
     title: 'Second Item',
+    source: 'https://playgroundapi.com/bootcamp/api/web/posting/image/124',
   },
   {
     id: '58694a0f-3da1-471f-bd96-145571e29d72',
     title: 'Third Item',
+    source: 'https://playgroundapi.com/bootcamp/api/web/posting/image/124',
   },
   {
     id: '58694a0f-3da1-471f-bd96-145571e29d74',
     title: 'Fourth Item',
+    source: 'https://playgroundapi.com/bootcamp/api/web/posting/image/124',
   },
   {
     id: '58694a0f-3da1-471f-bd96-145571e29d75',
     title: 'Fifth Item',
+    source: 'https://playgroundapi.com/bootcamp/api/web/posting/image/124',
   },
   {
     id: '58694a0f-3da1-471f-bd96-145571e29d76',
     title: 'Sixth Item',
+    source: 'https://playgroundapi.com/bootcamp/api/web/posting/image/124',
   },
   {
     id: '58694a0f-3da1-471f-bd96-145571e29d77',
     title: 'Seventh Item',
+    source: 'https://playgroundapi.com/bootcamp/api/web/posting/image/124',
   },
   {
     id: '58694a0f-3da1-471f-bd96-145571e29d78',
     title: 'Eight Item',
+    source: 'https://playgroundapi.com/bootcamp/api/web/posting/image/124',
   },
 ];
-
-const onUploadPress = () => {
-  console.warn('clicked');
-};
 
 const Item = ({title}) => (
   <View style={styles.item}>
@@ -101,7 +103,20 @@ const Item = ({title}) => (
 );
 
 const Homepage = () => {
-  const renderItem = ({item}) => <Item title={item.title} />;
+  const [token, setToken] = useState('');
+  const navigation = useNavigation();
+
+  const renderItem = ({item}) => (
+    <ImageItem
+      source={item.source}
+      title={item.title}
+      onPress={() => navigation.navigate('Detailpage')}
+    />
+  );
+
+  useEffect(() => {
+    getAllData;
+  }, []);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -114,14 +129,19 @@ const Homepage = () => {
         </View>
         <View style={styles.navigatorWrapper}>
           <Text style={styles.username}>Right</Text>
-          <CustomButton title="Upload" onPress={onUploadPress} />
-          <CustomButton title="Log out" onPress={onUploadPress} type="RED" />
+          <CustomButton
+            title="Upload"
+            onPress={() => navigation.navigate('Uploadpage')}
+          />
+          <CustomButton title="Log out" type="RED" />
         </View>
       </View>
       <FlatList
         data={DATA}
         renderItem={renderItem}
         keyExtractor={item => item.id}
+        contentContainerStyle={styles.itemWrapper}
+        numColumns={3}
       />
     </SafeAreaView>
   );
@@ -156,11 +176,8 @@ const styles = StyleSheet.create({
     width: '65%',
     alignSelf: 'center',
   },
-  item: {
-    backgroundColor: 'skyblue',
-    padding: 40,
-    margin: 10,
-    alignItems: 'center',
+  itemWrapper: {
+    flexDirection: 'column',
   },
 });
 

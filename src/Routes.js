@@ -7,14 +7,15 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 import Login from './screens/Login';
 import Homepage from './screens/Homepage';
-import LearnNetworking from './screens/LearnNetworking';
+import Uploadpage from './screens/Uploadpage';
+import Detailpage from './screens/Detailpage';
 
 const Stack = createNativeStackNavigator();
 
 const Routes = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
+      <Stack.Navigator initialRouteName="Uploadpage">
         <Stack.Screen
           name="Login"
           component={Login}
@@ -26,9 +27,14 @@ const Routes = () => {
           options={{headerShown: false}}
         />
         <Stack.Screen
-          name="LearnNetworking"
-          component={LearnNetworking}
-          options={{headerShown: false}}
+          name="Uploadpage"
+          component={Uploadpage}
+          options={{title: 'Upload'}}
+        />
+        <Stack.Screen
+          name="Detailpage"
+          component={Detailpage}
+          options={{title: 'Detail'}}
         />
       </Stack.Navigator>
     </NavigationContainer>

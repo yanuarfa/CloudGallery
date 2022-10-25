@@ -6,6 +6,7 @@ import {
   useWindowDimensions,
   ActivityIndicator,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
 import React, {useState, useEffect} from 'react';
 import {useNavigation} from '@react-navigation/native';
@@ -34,7 +35,7 @@ const Login = () => {
 
   const getApiData = async () => {
     if (username === '' || password === '') {
-      alert('Username or password should be filled');
+      Alert.alert('Username or password should be filled');
       return null;
     }
 
@@ -56,7 +57,7 @@ const Login = () => {
       );
       if (getData.status === 500) {
         setIsLoading(false);
-        alert('Username or password wrong!');
+        Alert.alert('Username or password wrong!');
         return null;
       }
       if (getData.status === 200) {
