@@ -6,66 +6,67 @@ import {
   useWindowDimensions,
   ActivityIndicator,
   TouchableOpacity,
-} from 'react-native';
-import React, {useState, useEffect} from 'react';
-import {useNavigation} from '@react-navigation/native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+} from "react-native";
+import React, { useState, useEffect } from "react";
+import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-import Logo from '../../assets/images/Gallery.png';
-import Input from '../components/Input';
-import CustomButton from '../components/CustomButton';
+import Logo from "../../assets/images/Gallery.png";
+import Input from "../components/Input";
+import CustomButton from "../components/CustomButton";
 
 const Login = () => {
-  const {height} = useWindowDimensions();
+  const { height } = useWindowDimensions();
   const navigation = useNavigation();
 
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [myData, setMyData] = useState({});
 
   const onRegisterPress = () => {
-    console.warn('Register');
+    console.warn("Register");
   };
 
   const onForgotPress = () => {
-    console.warn('Forgot');
+    console.warn("Forgot");
   };
 
   const getApiData = async () => {
-    if (username === '' || password === '') {
-      alert('Username or password should be filled');
+    if (username === "" || password === "") {
+      alert("Username or password should be filled");
       return null;
     }
 
     try {
       setIsLoading(true);
       const getData = await fetch(
-        'https://playgroundapi.com/bootcamp/api/web/user/login',
+        "https://playgroundapi.com/bootcamp/api/web/user/login",
         {
-          method: 'POST',
+          method: "POST",
           headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
+            Accept: "application/json",
+            "Content-Type": "application/json",
           },
           body: JSON.stringify({
             username,
             password,
           }),
-        },
+        }
       );
       if (getData.status === 500) {
         setIsLoading(false);
-        alert('Username or password wrong!');
+        alert("Username or password wrong!");
         return null;
       }
       if (getData.status === 200) {
         const results = await getData.json();
         setMyData(results);
         setIsLoading(false);
-        AsyncStorage.setItem('token', results.data.token);
-        // console.log(await AsyncStorage.getItem('@token'));
-        navigation.navigate('Homepage');
+        AsyncStorage.setItem("token", results.data.token);
+        AsyncStorage.setItem("avatar", results.data.avatar_url);
+        // console.log(await AsyncStorage.getItem("avatar"));
+        navigation.navigate("Homepage");
       }
     } catch (e) {
       console.error(e);
@@ -81,10 +82,10 @@ const Login = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.h1, {marginTop: 10}]}>Cloud Gallery</Text>
+      <Text style={[styles.h1, { marginTop: 10 }]}>Cloud Gallery</Text>
       <Image
         source={Logo}
-        style={[styles.logo, {height: height * 0.3}]}
+        style={[styles.logo, { height: height * 0.3 }]}
         resizeMode="contain"
       />
       <Text style={styles.h2}>Login</Text>
@@ -121,37 +122,37 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    backgroundColor: '#FFFFFF',
-    alignItems: 'center',
+    backgroundColor: "#FFFFFF",
+    alignItems: "center",
   },
   logo: {
-    width: '80%',
+    width: "80%",
     maxWidth: 400,
     maxHeight: 200,
     padding: 20,
   },
   h1: {
     fontSize: 24,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   h2: {
     fontSize: 20,
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   fpassword: {
-    alignSelf: 'flex-start',
-    marginStart: '10%',
+    alignSelf: "flex-start",
+    marginStart: "10%",
     margin: 5,
   },
   indicatorWrapper: {
     width: 100,
     height: 100,
     borderRadius: 10,
-    backgroundColor: '#EFF0FF',
-    position: 'absolute',
-    top: '50%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "#EFF0FF",
+    position: "absolute",
+    top: "50%",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 
